@@ -9,7 +9,7 @@ echo "6) Exit"
 read -p "اختيارك [1-5]: " choice
 
 case $choice in
-  1)read -p "أدخل اسم الدومين (مثال: example.com): " domain
+  1)read -p "Domain Name(example.com): " domain
 echo "[*] نبحث في crt.sh عن subdomains لـ $domain ..."
 curl -s "https://crt.sh/?q=%25.$domain&output=json" | jq -r '.[].name_value' | sort -u
 curl -s "https://crt.sh/?q=%25.$domain&output=json" | jq -r '.[].name_value' | sort -u | tee "${domain}_subdomains.txt"
@@ -26,11 +26,11 @@ fi
     echo "[+] اخترت Subdomain Scanner"
     ;;
   2) # First Gobuster Scan
-    read -p "🌐 إدخل رابط الموقع (مثال: https://example.com): " url
-    read -p "📂 إدخل مسار ملف wordlist (مثال: /usr/share/wordlists/dirb/common.txt): " wordlist
+    read -p "🌐  (https://example.com): " url
+    read -p "📂  wordlist (مثال: /usr/share/wordlists/dirb/common.txt): " wordlist
     echo "[*] جاري فحص المجلدات المخفية في $url ..."
     gobuster dir -u "$url" -w "$wordlist" -t 50 -o hidden_dirs.txt
-    echo "[+] تم حفظ النتائج في hidden_dirs.txt ✅"
+    echo "[+] saved hidden_dirs.txt ✅"
 
     # Second Gobuster Scan 
     echo -n "🌐 إدخل رابط الموقع (مثال: https://example.com): "
